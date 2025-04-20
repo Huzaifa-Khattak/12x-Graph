@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Ads Performance Animation</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
@@ -13,26 +13,33 @@
     }
 
     .hero {
-      height: 80vh;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 32px;
+      font-size: 2rem;
+      font-weight: bold;
       color: #333;
+      text-align: center;
+      padding: 0 20px;
     }
 
     #chart-wrapper {
       max-width: 900px;
       width: 100%;
-      margin: 100px auto;
+      margin: 0 auto 100px auto;
       padding: 50px 20px;
     }
   </style>
 </head>
 <body>
 
-  <div class="hero">Scroll a bit to see ad performance 🔥</div>
+  <!-- Hero Section -->
+  <div class="hero">
+    Scroll down slightly to see ad performance 📈
+  </div>
 
+  <!-- Chart Section -->
   <div id="chart-wrapper">
     <canvas id="adsChart"></canvas>
   </div>
@@ -40,7 +47,7 @@
   <script>
     let chartInstance = null;
 
-    const createChart = () => {
+    function createChart() {
       const ctx = document.getElementById('adsChart').getContext('2d');
       chartInstance = new Chart(ctx, {
         type: 'line',
@@ -105,9 +112,8 @@
           }
         }
       });
-    };
+    }
 
-    // Intersection Observer triggers when chart-wrapper is partially in view
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting && !chartInstance) {
@@ -115,7 +121,7 @@
         }
       });
     }, {
-      threshold: 0.2 // Trigger when 20% visible
+      threshold: 0.3 // Trigger when 30% visible
     });
 
     observer.observe(document.getElementById('chart-wrapper'));

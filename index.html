@@ -1,23 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="utf-8" />
-  <title>Ads Performance Animation</title>
+  <title>Funnel Performance Animation</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body {
-      margin: 0;
       background: white;
-      font-family: sans-serif;
-    }
-
-    .chart-section {
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 100px 20px;
+      height: 100vh;
+      margin: 0;
     }
-
     canvas {
       max-width: 800px;
       max-height: 500px;
@@ -25,99 +20,75 @@
   </style>
 </head>
 <body>
-
-  <!-- Example content above -->
-  <div style="height: 100vh; display: flex; justify-content: center; align-items: center;">
-    <h1>Welcome to the site — scroll down</h1>
-  </div>
-
-  <!-- Chart section -->
-  <div class="chart-section" id="chartWrapper">
-    <canvas id="funnelChart"></canvas>
-  </div>
+  <canvas id="funnelChart"></canvas>
 
   <script>
-    let chartInstance = null;
+    const ctx = document.getElementById('funnelChart').getContext('2d');
 
-    function createChart() {
-      const ctx = document.getElementById('funnelChart').getContext('2d');
-      chartInstance = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: ['CTR (%)', 'CPM ($)', 'CPC ($)', 'Conv. Rate (%)', 'Result (x)'],
-          datasets: [
-            {
-              label: 'Before',
-              data: [1, 12, 1.2, 1, 1],
-              borderColor: '#C30000',
-              backgroundColor: '#C30000',
-              borderWidth: 5,
-              pointBackgroundColor: '#C30000',
-              tension: 0.4,
-            },
-            {
-              label: 'After',
-              data: [3, 6, 0.2, 2, 12],
-              borderColor: '#00A0FF',
-              backgroundColor: '#00A0FF',
-              borderWidth: 5,
-              pointBackgroundColor: '#00A0FF',
-              tension: 0.4,
-            }
-          ]
-        },
-        options: {
-          responsive: true,
-          animation: {
-            duration: 2000,
-            easing: 'easeOutQuart'
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['CTR (%)', 'CPM ($)', 'CPC ($)', 'Conv. Rate (%)', 'Result (x)'],
+        datasets: [
+          {
+            label: 'Before',
+            data: [1, 12, 1.2, 1, 1],
+            borderColor: '#C30000',
+            backgroundColor: '#C30000',
+            borderWidth: 5,
+            pointBackgroundColor: '#C30000',
+            tension: 0.4,
           },
-          plugins: {
+          {
+            label: 'After',
+            data: [3, 6, 0.2, 2, 12],
+            borderColor: '#00A0FF',
+            backgroundColor: '#00A0FF',
+            borderWidth: 5,
+            pointBackgroundColor: '#00A0FF',
+            tension: 0.4,
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        animation: {
+          duration: 2000,
+          easing: 'easeOutQuart'
+        },
+        plugins: {
+          title: {
+            display: true,
+            text: 'Funnel Performance: Before vs After Optimization',
+            font: {
+              size: 20,
+              weight: 'bold'
+            }
+          },
+          legend: {
+            position: 'top',
+          },
+          tooltip: {
+            enabled: true
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
             title: {
               display: true,
-              text: 'Ads Performance: Before vs After Optimization',
-              font: {
-                size: 20,
-                weight: 'bold'
-              }
-            },
-            legend: {
-              position: 'top',
-            },
-            tooltip: {
-              enabled: true
+              text: 'Value'
             }
           },
-          scales: {
-            y: {
-              beginAtZero: true,
-              title: {
-                display: true,
-                text: 'Value'
-              }
-            },
-            x: {
-              title: {
-                beginAtZero: true,
-                display: true,
-                text: 'Metric'
-              }
+          x: {
+            title: {
+              display: true,
+              text: 'Metric'
             }
           }
         }
-      });
-    }
-
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && !chartInstance) {
-          createChart();
-        }
-      });
-    }, { threshold: 0.3 });
-
-    observer.observe(document.getElementById('chartWrapper'));
+      }
+    });
   </script>
-
 </body>
 </html>

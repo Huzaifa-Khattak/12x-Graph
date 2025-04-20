@@ -12,32 +12,30 @@
       font-family: sans-serif;
     }
 
-    .spacer {
-      height: 100vh;
+    .hero {
+      height: 80vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      color: gray;
-      font-size: 24px;
+      font-size: 32px;
+      color: #333;
     }
 
     #chart-wrapper {
       max-width: 900px;
       width: 100%;
-      margin: 0 auto;
-      padding: 100px 0;
+      margin: 100px auto;
+      padding: 50px 20px;
     }
   </style>
 </head>
 <body>
 
-  <div class="spacer">Scroll down to see the magic 👇</div>
+  <div class="hero">Scroll a bit to see ad performance 🔥</div>
 
   <div id="chart-wrapper">
     <canvas id="adsChart"></canvas>
   </div>
-
-  <div class="spacer">Chart has loaded! 🎉</div>
 
   <script>
     let chartInstance = null;
@@ -109,7 +107,7 @@
       });
     };
 
-    // Scroll trigger using Intersection Observer
+    // Intersection Observer triggers when chart-wrapper is partially in view
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting && !chartInstance) {
@@ -117,10 +115,11 @@
         }
       });
     }, {
-      threshold: 0.5
+      threshold: 0.2 // Trigger when 20% visible
     });
 
     observer.observe(document.getElementById('chart-wrapper'));
   </script>
+
 </body>
 </html>

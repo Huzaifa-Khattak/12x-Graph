@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Funnel Performance Animation</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      margin: 0;
+      background: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    #chart-wrapper {
+      max-width: 900px;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div id="chart-wrapper">
+    <canvas id="funnelChart"></canvas>
+  </div>
+
+  <script>
+    const ctx = document.getElementById('funnelChart').getContext('2d');
+
+    const funnelChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['CTR (%)', 'CPM ($)', 'CPC ($)', 'Conv. Rate (%)', 'Result (x)'],
+        datasets: [
+          {
+            label: 'Before',
+            data: [1, 12, 1.2, 1, 1],
+            borderColor: '#D0021B',
+            backgroundColor: '#D0021B',
+            pointBackgroundColor: '#D0021B',
+            borderWidth: 4,
+            tension: 0.3,
+            fill: false
+          },
+          {
+            label: 'After',
+            data: [3, 6, 0.2, 2, 12],
+            borderColor: '#00A0FF',
+            backgroundColor: '#00A0FF',
+            pointBackgroundColor: '#00A0FF',
+            borderWidth: 4,
+            tension: 0.3,
+            fill: false
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        animation: {
+          duration: 2000,
+          easing: 'easeOutQuart'
+        },
+        plugins: {
+          title: {
+            display: true,
+            text: 'Funnel Performance: Before vs After Optimization',
+            font: {
+              size: 20,
+              weight: 'bold'
+            }
+          },
+          legend: {
+            position: 'top'
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'Value'
+            }
+          },
+          x: {
+            title: {
+              display: true,
+              text: 'Metric'
+            }
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>

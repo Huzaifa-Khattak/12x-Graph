@@ -2,16 +2,16 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <title>Funnel Performance Animation</title>
+  <title>Ads Performance Animation</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body {
       background: white;
+      margin: 0;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      margin: 0;
     }
     canvas {
       max-width: 800px;
@@ -20,75 +20,95 @@
   </style>
 </head>
 <body>
-  <canvas id="funnelChart"></canvas>
+
+  <div id="chart-container" style="opacity: 0;">
+    <canvas id="funnelChart"></canvas>
+  </div>
 
   <script>
-    const ctx = document.getElementById('funnelChart').getContext('2d');
+    let chartRendered = false;
 
-    new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: ['CTR (%)', 'CPM ($)', 'CPC ($)', 'Conv. Rate (%)', 'Result (x)'],
-        datasets: [
-          {
-            label: 'Before',
-            data: [1, 12, 1.2, 1, 1],
-            borderColor: '#C30000',
-            backgroundColor: '#C30000',
-            borderWidth: 5,
-            pointBackgroundColor: '#C30000',
-            tension: 0.4,
-          },
-          {
-            label: 'After',
-            data: [3, 6, 0.2, 2, 12],
-            borderColor: '#00A0FF',
-            backgroundColor: '#00A0FF',
-            borderWidth: 5,
-            pointBackgroundColor: '#00A0FF',
-            tension: 0.4,
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        animation: {
-          duration: 2000,
-          easing: 'easeOutQuart'
-        },
-        plugins: {
-          title: {
-            display: true,
-            text: 'Funnel Performance: Before vs After Optimization',
-            font: {
-              size: 20,
-              weight: 'bold'
+    function createChart() {
+      const ctx = document.getElementById('funnelChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['CTR (%)', 'CPM ($)', 'CPC ($)', 'Conv. Rate (%)', 'Result (x)'],
+          datasets: [
+            {
+              label: 'Before',
+              data: [1, 12, 1.2, 1, 1],
+              borderColor: '#C30000',
+              backgroundColor: '#C30000',
+              borderWidth: 5,
+              pointBackgroundColor: '#C30000',
+              tension: 0.4,
+            },
+            {
+              label: 'After',
+              data: [3, 6, 0.2, 2, 12],
+              borderColor: '#00A0FF',
+              backgroundColor: '#00A0FF',
+              borderWidth: 5,
+              pointBackgroundColor: '#00A0FF',
+              tension: 0.4,
             }
-          },
-          legend: {
-            position: 'top',
-          },
-          tooltip: {
-            enabled: true
-          }
+          ]
         },
-        scales: {
-          y: {
-            beginAtZero: true,
+        options: {
+          responsive: true,
+          animation: {
+            duration: 2000,
+            easing: 'easeOutQuart'
+          },
+          plugins: {
             title: {
               display: true,
-              text: 'Value'
+              text: 'Ads Performance: Before vs After Optimization',
+              font: {
+                size: 20,
+                weight: 'bold'
+              }
+            },
+            legend: {
+              position: 'top',
+            },
+            tooltip: {
+              enabled: true
             }
           },
-          x: {
-            title: {
-              display: true,
-              text: 'Metric'
+          scales: {
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Value'
+              }
+            },
+            x: {
+              title: {
+                display: true,
+                text: 'Metric'
+              }
             }
           }
         }
+      });
+    }
+
+    // Observer to check if the chart is visible inside the iframe
+    const observer = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && !chartRendered) {
+        document.getElementById('chart-container').style.opacity = 1;
+        createChart();
+        chartRendered = true;
       }
+    }, {
+      threshold: 0.5
     });
+
+    observer.observe(document.getElementById('chart-container'));
   </script>
+
 </body>
 </html>

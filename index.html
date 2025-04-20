@@ -1,31 +1,34 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Funnel Performance Animation</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ads Performance Animation</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body {
+      margin: 0;
       background: white;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      margin: 0;
     }
-    canvas {
-      max-width: 800px;
-      max-height: 500px;
+    #chart-wrapper {
+      max-width: 900px;
+      width: 100%;
     }
   </style>
 </head>
 <body>
-  <canvas id="funnelChart"></canvas>
+  <div id="chart-wrapper">
+    <canvas id="funnelChart"></canvas>
+  </div>
 
   <script>
     const ctx = document.getElementById('funnelChart').getContext('2d');
 
-    new Chart(ctx, {
+    const funnelChart = new Chart(ctx, {
       type: 'line',
       data: {
         labels: ['CTR (%)', 'CPM ($)', 'CPC ($)', 'Conv. Rate (%)', 'Result (x)'],
@@ -33,20 +36,22 @@
           {
             label: 'Before',
             data: [1, 12, 1.2, 1, 1],
-            borderColor: '#C30000',
-            backgroundColor: '#C30000',
-            borderWidth: 5,
-            pointBackgroundColor: '#C30000',
-            tension: 0.4,
+            borderColor: '#D0021B',
+            backgroundColor: '#D0021B',
+            pointBackgroundColor: '#D0021B',
+            borderWidth: 4,
+            tension: 0.3,
+            fill: false
           },
           {
             label: 'After',
             data: [3, 6, 0.2, 2, 12],
             borderColor: '#00A0FF',
             backgroundColor: '#00A0FF',
-            borderWidth: 5,
             pointBackgroundColor: '#00A0FF',
-            tension: 0.4,
+            borderWidth: 4,
+            tension: 0.3,
+            fill: false
           }
         ]
       },
@@ -59,17 +64,14 @@
         plugins: {
           title: {
             display: true,
-            text: 'Ads Performance: Before vs After Optimization',
+            text: 'Ads Performance: Before vs After',
             font: {
               size: 20,
               weight: 'bold'
             }
           },
           legend: {
-            position: 'top',
-          },
-          tooltip: {
-            enabled: true
+            position: 'top'
           }
         },
         scales: {

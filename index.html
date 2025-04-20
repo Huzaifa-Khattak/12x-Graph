@@ -9,88 +9,118 @@
     body {
       margin: 0;
       background: white;
+      font-family: sans-serif;
+    }
+
+    .spacer {
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      color: gray;
+      font-size: 24px;
     }
+
     #chart-wrapper {
       max-width: 900px;
       width: 100%;
+      margin: 0 auto;
+      padding: 100px 0;
     }
   </style>
 </head>
 <body>
+
+  <div class="spacer">Scroll down to see the magic 👇</div>
+
   <div id="chart-wrapper">
-    <canvas id="funnelChart"></canvas>
+    <canvas id="adsChart"></canvas>
   </div>
 
-  <script>
-    const ctx = document.getElementById('funnelChart').getContext('2d');
+  <div class="spacer">Chart has loaded! 🎉</div>
 
-    const funnelChart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: ['CTR (%)', 'CPM ($)', 'CPC ($)', 'Conv. Rate (%)', 'Result (x)'],
-        datasets: [
-          {
-            label: 'Before',
-            data: [1, 12, 1.2, 1, 1],
-            borderColor: '#D0021B',
-            backgroundColor: '#D0021B',
-            pointBackgroundColor: '#D0021B',
-            borderWidth: 4,
-            tension: 0.3,
-            fill: false
-          },
-          {
-            label: 'After',
-            data: [3, 6, 0.2, 2, 12],
-            borderColor: '#00A0FF',
-            backgroundColor: '#00A0FF',
-            pointBackgroundColor: '#00A0FF',
-            borderWidth: 4,
-            tension: 0.3,
-            fill: false
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        animation: {
-          duration: 2000,
-          easing: 'easeOutQuart'
-        },
-        plugins: {
-          title: {
-            display: true,
-            text: 'Ads Performance: Before vs After',
-            font: {
-              size: 20,
-              weight: 'bold'
+  <script>
+    let chartInstance = null;
+
+    const createChart = () => {
+      const ctx = document.getElementById('adsChart').getContext('2d');
+      chartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['CTR (%)', 'CPM ($)', 'CPC ($)', 'Conv. Rate (%)', 'Result (x)'],
+          datasets: [
+            {
+              label: 'Before',
+              data: [1, 12, 1.2, 1, 1],
+              borderColor: '#D0021B',
+              backgroundColor: '#D0021B',
+              pointBackgroundColor: '#D0021B',
+              borderWidth: 4,
+              tension: 0.3,
+              fill: false
+            },
+            {
+              label: 'After',
+              data: [3, 6, 0.2, 2, 12],
+              borderColor: '#00A0FF',
+              backgroundColor: '#00A0FF',
+              pointBackgroundColor: '#00A0FF',
+              borderWidth: 4,
+              tension: 0.3,
+              fill: false
             }
-          },
-          legend: {
-            position: 'top'
-          }
+          ]
         },
-        scales: {
-          y: {
-            beginAtZero: true,
+        options: {
+          responsive: true,
+          animation: {
+            duration: 2000,
+            easing: 'easeOutQuart'
+          },
+          plugins: {
             title: {
               display: true,
-              text: 'Value'
+              text: 'Ads Performance: Before vs After',
+              font: {
+                size: 20,
+                weight: 'bold'
+              }
+            },
+            legend: {
+              position: 'top'
             }
           },
-          x: {
-            title: {
-              display: true,
-              text: 'Metric'
+          scales: {
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Value'
+              }
+            },
+            x: {
+              title: {
+                display: true,
+                text: 'Metric'
+              }
             }
           }
         }
-      }
+      });
+    };
+
+    // Scroll trigger using Intersection Observer
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !chartInstance) {
+          createChart();
+        }
+      });
+    }, {
+      threshold: 0.5
     });
+
+    observer.observe(document.getElementById('chart-wrapper'));
   </script>
 </body>
 </html>
